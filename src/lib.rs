@@ -7,15 +7,6 @@ fn get_bit_size(num: u32) -> u32 {
     ((num as f64).log2().floor() as u32) + 1
 }
 
-fn to_binary_vec(num: u32) -> Vec<bool> {
-    let bit_size = get_bit_size(num);
-
-    (0..bit_size).map(|i| {
-        let bit_index = (bit_size - 1) - i;
-        (0b1 << bit_index & num) >> bit_index == 1
-    }).collect::<Vec<bool>>()
-}
-
 fn to_fixed_binary_vec(num: u32, bit_size: u32) -> Vec<bool> {
     (0..(bit_size + 1)).map(|i| {
         let bit_index = bit_size - i;
@@ -66,19 +57,6 @@ mod sum_subset_tests {
         assert_eq!(get_bit_size(6), 3);
         assert_eq!(get_bit_size(7), 3);
         assert_eq!(get_bit_size(8), 4);
-    }
-
-    #[test]
-    fn to_binary_array_converts_to_array() {
-        assert_eq!(to_binary_vec(0), [false]);
-        assert_eq!(to_binary_vec(1), [true]);
-        assert_eq!(to_binary_vec(2), [true, false]);
-        assert_eq!(to_binary_vec(3), [true, true]);
-        assert_eq!(to_binary_vec(4), [true, false, false]);
-        assert_eq!(to_binary_vec(5), [true, false, true]);
-        assert_eq!(to_binary_vec(6), [true, true, false]);
-        assert_eq!(to_binary_vec(7), [true, true, true]);
-        assert_eq!(to_binary_vec(8), [true, false, false, false]);
     }
 
     #[test]
